@@ -30,6 +30,9 @@
                                         <buttonConfiguration key="configuration" style="plain" image="location.square.fill" catalog="system">
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="locationButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="icm-A3-3r4"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9X2-hj-L6r">
                                         <rect key="frame" x="50" y="0.0" width="231" height="50"/>
@@ -46,6 +49,9 @@
                                         <buttonConfiguration key="configuration" style="plain" image="magnifyingglass.circle.fill" catalog="system">
                                             <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="searchButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="igC-Bi-7iQ"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -92,6 +98,12 @@
                             <constraint firstItem="qpS-pK-EVG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="uuZ-cF-9Jm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityLabel" destination="tlJ-cG-EDc" id="KP8-6F-BFl"/>
+                        <outlet property="imageMain" destination="y3C-Rl-5pC" id="wN7-bP-jeh"/>
+                        <outlet property="searchBar" destination="9X2-hj-L6r" id="9yg-Cn-DZs"/>
+                        <outlet property="temperatureLabel" destination="LQs-bW-4in" id="FLp-QI-caH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
