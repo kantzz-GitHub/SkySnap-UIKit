@@ -17,8 +17,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageMain: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var searchBar: UITextField!
+    @IBOutlet weak var tempSelected: UISegmentedControl!
+    @IBOutlet weak var weatherCondition: UILabel!
+    
+    
     
     private let locationManager = CLLocationManager()
+    private var cityGlobal: String?
     
     
     override func viewDidLoad() {
@@ -31,15 +36,34 @@ class ViewController: UIViewController {
     @IBAction func searchButtonTapped(_ sender: UIButton) {
         if searchBar.hasText{
             updateWeather(for: searchBar.text!)
+            cityGlobal = searchBar.text!
+            searchBar.text = ""
         } else {
             print("Search bar is empty")
-            searchBar.placeholder = "TYPE CITY NAME!"
+            searchBar.placeholder = "Please type city name"
         }
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
+    }
+    @IBAction func temperatureSelected(_ sender: UISegmentedControl) {
+//        if sender.selectedSegmentIndex == 0{
+//            
+//        } else {
+//            
+//        }
+//        if searchBar.hasText{
+//            updateWeather(for: searchBar.text!)
+//        } else 
+        
+        if let locationCity = cityGlobal{
+            updateWeather(for: locationCity)
+        } else {
+            print("Search bar is empty")
+            searchBar.placeholder = "TYPE CITY NAME!"
+        }
     }
     
     
@@ -81,6 +105,7 @@ class ViewController: UIViewController {
                 return
             }
             
+            self.cityGlobal = result!.location.name
             self.updateUI(with: result!)
             
         }
@@ -91,7 +116,13 @@ class ViewController: UIViewController {
     private func updateUI(with result: WeatherData){
         DispatchQueue.main.async {
             self.cityLabel.text = result.location.name
-            self.temperatureLabel.text = String(result.current.temp_c)
+            self.weatherCondition.text = result.current.condition.text
+            if self.tempSelected.selectedSegmentIndex == 0{
+                self.temperatureLabel.text = String(result.current.temp_c)
+            } else {
+                self.temperatureLabel.text = String(result.current.temp_f)
+            }
+            
         }
     }
     
@@ -141,6 +172,7 @@ struct CurrentWeather: Decodable{
 }
 struct Condition: Decodable{
     let code: Int
+    let text: String
 }
 
 extension ViewController: CLLocationManagerDelegate{
@@ -155,6 +187,7 @@ extension ViewController: CLLocationManagerDelegate{
         fetchCityAndCountry(from: location) { city, country, error in
             guard let city = city, let country = country, error == nil else { return }
             print(city + ", " + country)
+            self.cityGlobal = city
             self.updateWeather(for: city)
             
         }

@@ -63,9 +63,8 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CityName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="tlJ-cG-EDc">
-                                <rect key="frame" x="121.66666666666669" y="216" width="150" height="30"/>
+                                <rect key="frame" x="31" y="216" width="331" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="jeO-eL-QGy"/>
                                     <constraint firstAttribute="height" constant="30" id="xE4-gB-bsH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
@@ -73,10 +72,32 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LQs-bW-4in">
-                                <rect key="frame" x="146.66666666666666" y="616" width="100" height="30"/>
+                                <rect key="frame" x="31" y="649" width="331" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="kVi-Ha-nZP"/>
                                     <constraint firstAttribute="height" constant="30" id="tlN-Ky-V2a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hSd-kb-8LA">
+                                <rect key="frame" x="156.66666666666666" y="687" width="80" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="FaQ-o5-77t"/>
+                                    <constraint firstAttribute="height" constant="40" id="gv6-8F-UUZ"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="°C"/>
+                                    <segment title="°F"/>
+                                </segments>
+                                <connections>
+                                    <action selector="temperatureSelected:" destination="BYZ-38-t0r" eventType="valueChanged" id="0AU-AS-4Sx"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Condition" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="LYW-C4-EK2">
+                                <rect key="frame" x="31" y="611" width="331" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="3ej-Xx-wjf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <nil key="textColor"/>
@@ -86,23 +107,35 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="LQs-bW-4in" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="6NP-u6-qxG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LQs-bW-4in" secondAttribute="trailing" constant="15" id="6bu-3R-m02"/>
+                            <constraint firstItem="hSd-kb-8LA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AlV-Fo-Kwy"/>
                             <constraint firstItem="LQs-bW-4in" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Aum-JO-4fJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="LYW-C4-EK2" secondAttribute="trailing" constant="15" id="BjY-Ld-6um"/>
+                            <constraint firstItem="tlJ-cG-EDc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="Byd-Eu-hKM"/>
                             <constraint firstItem="y3C-Rl-5pC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="JAY-gx-bww"/>
+                            <constraint firstItem="LYW-C4-EK2" firstAttribute="top" secondItem="y3C-Rl-5pC" secondAttribute="bottom" constant="35" id="LEH-Al-RJi"/>
+                            <constraint firstItem="LYW-C4-EK2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OAl-Bv-zzg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qpS-pK-EVG" secondAttribute="trailing" constant="15" id="PeZ-Nd-CfL"/>
                             <constraint firstItem="qpS-pK-EVG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SLk-73-zmt"/>
                             <constraint firstItem="y3C-Rl-5pC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SzR-c9-dLw"/>
-                            <constraint firstItem="LQs-bW-4in" firstAttribute="top" secondItem="y3C-Rl-5pC" secondAttribute="bottom" constant="40" id="UAT-c0-1ds"/>
+                            <constraint firstItem="LYW-C4-EK2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="UHF-c7-O7h"/>
                             <constraint firstItem="tlJ-cG-EDc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Xq5-qV-A49"/>
                             <constraint firstItem="qpS-pK-EVG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="aRa-Pv-h5o"/>
                             <constraint firstItem="y3C-Rl-5pC" firstAttribute="top" secondItem="tlJ-cG-EDc" secondAttribute="bottom" constant="30" id="eI8-vx-vWL"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tlJ-cG-EDc" secondAttribute="trailing" constant="15" id="sdD-Oy-DsU"/>
+                            <constraint firstItem="hSd-kb-8LA" firstAttribute="top" secondItem="LQs-bW-4in" secondAttribute="bottom" constant="8" id="tdk-vh-vBZ"/>
                             <constraint firstItem="qpS-pK-EVG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="uuZ-cF-9Jm"/>
+                            <constraint firstItem="LQs-bW-4in" firstAttribute="top" secondItem="LYW-C4-EK2" secondAttribute="bottom" constant="8" id="vho-ii-2Dg"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cityLabel" destination="tlJ-cG-EDc" id="KP8-6F-BFl"/>
                         <outlet property="imageMain" destination="y3C-Rl-5pC" id="wN7-bP-jeh"/>
                         <outlet property="searchBar" destination="9X2-hj-L6r" id="9yg-Cn-DZs"/>
+                        <outlet property="tempSelected" destination="hSd-kb-8LA" id="Bin-k6-aK0"/>
                         <outlet property="temperatureLabel" destination="LQs-bW-4in" id="FLp-QI-caH"/>
+                        <outlet property="weatherCondition" destination="LYW-C4-EK2" id="fGi-ko-0Ku"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
