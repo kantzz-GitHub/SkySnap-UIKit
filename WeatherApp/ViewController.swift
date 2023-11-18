@@ -6,30 +6,40 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 class ViewController: UIViewController {
+    
+    
     
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var imageMain: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var searchBar: UITextField!
     
+    private let locationManager = CLLocationManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
         imageMain.image = UIImage(systemName: "sun.max.fill")
     }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
-        guard searchBar.text != nil else {
+        if searchBar.hasText{
+            updateWeather(for: searchBar.text!)
+        } else {
             print("Search bar is empty")
             searchBar.placeholder = "TYPE CITY NAME!"
-            return
         }
-        updateWeather(for: searchBar.text!)
     }
     
     @IBAction func locationButtonTapped(_ sender: UIButton) {
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
     }
     
     
@@ -131,6 +141,35 @@ struct CurrentWeather: Decodable{
 }
 struct Condition: Decodable{
     let code: Int
+}
+
+extension ViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("Got location")
+        
+        guard let location = locations.last else { return }
+        
+        print(location.coordinate.latitude)
+        print(location.coordinate.longitude)
+        
+        fetchCityAndCountry(from: location) { city, country, error in
+            guard let city = city, let country = country, error == nil else { return }
+            print(city + ", " + country)
+            self.updateWeather(for: city)
+            
+        }
+    }
+    func fetchCityAndCountry(from location: CLLocation, completion: @escaping (_ city: String?, _ country:  String?, _ error: Error?) -> ()) {
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+            completion(placemarks?.first?.locality,
+                       placemarks?.first?.country,
+                       error)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }
 
 
