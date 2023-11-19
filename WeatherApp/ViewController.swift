@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         locationManager.delegate = self
+        searchBar.delegate = self
         imageMain.image = UIImage(systemName: "sun.max")
         imageMain.tintColor = .systemYellow
         
@@ -48,6 +49,7 @@ class ViewController: UIViewController {
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
         if searchBar.hasText{
+            searchBar.endEditing(true)
             updateWeather(for: searchBar.text!)
             cityGlobal = searchBar.text!
             searchBar.text = ""
@@ -273,4 +275,29 @@ extension ViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
+}
+
+extension ViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        print(textField.text ?? "")
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+            if textField.text != ""{
+                return true
+            } else {
+                textField.placeholder = "Please type city name"
+                return false
+            }
+        }
+        
+        func textFieldDidEndEditing(_ textField: UITextField) {
+            if let cityName = searchBar.text{
+                updateWeather(for: cityName)
+            }
+            searchBar.text = ""
+            searchBar.placeholder = "Please type city name"
+        }
 }
