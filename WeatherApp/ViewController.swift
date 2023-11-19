@@ -25,12 +25,16 @@ class ViewController: UIViewController {
     private let locationManager = CLLocationManager()
     private var cityGlobal: String?
     
+    let configOne = UIImage.SymbolConfiguration(paletteColors: [.systemGray, .systemYellow])
+    let configTwo = UIImage.SymbolConfiguration(paletteColors: [.systemYellow])
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         locationManager.delegate = self
-        imageMain.image = UIImage(systemName: "sun.max.fill")
+        imageMain.image = UIImage(systemName: "sun.max")
+        imageMain.tintColor = .systemYellow
     }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
@@ -49,20 +53,11 @@ class ViewController: UIViewController {
         locationManager.requestLocation()
     }
     @IBAction func temperatureSelected(_ sender: UISegmentedControl) {
-//        if sender.selectedSegmentIndex == 0{
-//            
-//        } else {
-//            
-//        }
-//        if searchBar.hasText{
-//            updateWeather(for: searchBar.text!)
-//        } else 
-        
         if let locationCity = cityGlobal{
             updateWeather(for: locationCity)
         } else {
             print("Search bar is empty")
-            searchBar.placeholder = "TYPE CITY NAME!"
+            searchBar.placeholder = "Please type city name"
         }
     }
     
@@ -115,6 +110,13 @@ class ViewController: UIViewController {
     
     private func updateUI(with result: WeatherData){
         DispatchQueue.main.async {
+            let image = self.updateImageMain(with: result.current.condition.code)
+            self.imageMain.image = UIImage(systemName: image)
+            if(image == "sun.max"){
+                self.imageMain.preferredSymbolConfiguration = self.configTwo
+            } else {
+                self.imageMain.preferredSymbolConfiguration = self.configOne
+            }
             self.cityLabel.text = result.location.name
             self.weatherCondition.text = result.current.condition.text
             if self.tempSelected.selectedSegmentIndex == 0{
@@ -122,7 +124,45 @@ class ViewController: UIViewController {
             } else {
                 self.temperatureLabel.text = String(result.current.temp_f)
             }
-            
+        }
+    }
+    
+    private func updateImageMain(with code: Int) -> String{
+        switch code {
+        case 1000:
+            return "sun.max"
+        case 1003...1009:
+            return "cloud.sun"
+        case 1030:
+            return "cloud.fog"
+        case 1063:
+            return "cloud.sun.rain"
+        case 1066:
+            return "cloud.snow"
+        case 1069:
+            return "cloud.sleet"
+        case 1072:
+            return "cloud.drizzle"
+        case 1087:
+            return "cloud.bolt.fill"
+        case 1114...1117:
+            return "wind.snow"
+        case 1135...1147:
+            return "cloud.fog"
+        case 1150...1201:
+            return "cloud.drizzle"
+        case 1204...1207:
+            return "cloud.sleet"
+        case 1210...1237:
+            return "snowflake"
+        case 1240...1246:
+            return "cloud.rain"
+        case 1249...1264:
+            return "cloud.sleet"
+        case 1273...1276:
+            return "cloud.bolt.rain.fill"
+        default:
+            return "snowflake"
         }
     }
     
@@ -204,5 +244,3 @@ extension ViewController: CLLocationManagerDelegate{
         print(error)
     }
 }
-
-
