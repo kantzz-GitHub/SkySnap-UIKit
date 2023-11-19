@@ -19,6 +19,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var searchBar: UITextField!
     @IBOutlet weak var tempSelected: UISegmentedControl!
     @IBOutlet weak var weatherCondition: UILabel!
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var locationButton: UIButton!
     
     
     
@@ -35,6 +39,11 @@ class ViewController: UIViewController {
         locationManager.delegate = self
         imageMain.image = UIImage(systemName: "sun.max")
         imageMain.tintColor = .systemYellow
+        
+//        let imageView = UIImageView(image: UIImage(named: "daylight_background"))
+//        imageView.frame = view.bounds
+//        imageView.contentMode = .scaleAspectFit
+//        view.addSubview(imageView)
     }
     
     @IBAction func searchButtonTapped(_ sender: UIButton) {
@@ -110,7 +119,24 @@ class ViewController: UIViewController {
     
     private func updateUI(with result: WeatherData){
         DispatchQueue.main.async {
-            let image = self.updateImageMain(with: result.current.condition.code)
+            if result.current.is_day == 0 {
+                self.backgroundImage.image = UIImage(named: "night_background")
+                self.cityLabel.textColor = .white
+                self.temperatureLabel.textColor = .white
+                self.weatherCondition.textColor = .white
+                self.tempSelected.backgroundColor = .white
+                self.searchButton.backgroundColor = .white
+                self.locationButton.backgroundColor = .white
+            } else {
+                self.cityLabel.textColor = .black
+                self.temperatureLabel.textColor = .black
+                self.weatherCondition.textColor = .black
+                self.tempSelected.backgroundColor = .gray
+                self.searchButton.backgroundColor = .none
+                self.locationButton.backgroundColor = .none
+                self.backgroundImage.image = UIImage(named: "daylight_background")
+            }
+            let image = self.updateImageMain(code: result.current.condition.code, isDay: result.current.is_day)
             self.imageMain.image = UIImage(systemName: image)
             if(image == "sun.max"){
                 self.imageMain.preferredSymbolConfiguration = self.configTwo
@@ -127,16 +153,19 @@ class ViewController: UIViewController {
         }
     }
     
-    private func updateImageMain(with code: Int) -> String{
+    private func updateImageMain(code: Int, isDay: Int) -> String{
         switch code {
         case 1000:
-            return "sun.max"
+            if isDay == 1{return "sun.max"}
+            return "moon.stars.fill"
         case 1003...1009:
-            return "cloud.sun"
+            if isDay == 1{return "cloud.sun"}
+            return "cloud.moon.fill"
         case 1030:
             return "cloud.fog"
         case 1063:
-            return "cloud.sun.rain"
+            if isDay == 1{return "cloud.sun.rain"}
+            return "cloud.moon.rain.fill"
         case 1066:
             return "cloud.snow"
         case 1069:
@@ -209,6 +238,7 @@ struct CurrentWeather: Decodable{
     let temp_c: Float
     let temp_f: Float
     let condition: Condition
+    let is_day: Int
 }
 struct Condition: Decodable{
     let code: Int
